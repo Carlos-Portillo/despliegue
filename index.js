@@ -5,6 +5,8 @@ const bodyParser = require("body-parser")
 const PORT = process.env.PORT || 5000
 const app = express()
 
+const userId = 1;
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
@@ -34,6 +36,18 @@ app.post("/getUserById", (req, res) => {
   }
 })
 
+app.get("/getUserById/:id", (req, res) => {
+  const userId = req.params.id;
+  axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`)
+    .then(function(response) {
+      res.json(response.data);
+    }).catch(function(error) {
+      res.json("Error occurred!");
+    });
+});
+
+
 app.listen(PORT, function () {
   console.log(`Express server listening on port ${PORT}`)
 })
+
